@@ -1,0 +1,1616 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PIG - Fiche Unité de Production</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Mêmes styles que la page précédente pour la cohérence */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #0d1b2a 0%, #1b263b 100%);
+            color: white;
+            line-height: 1.6;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 25px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .logo {
+            font-size: 3rem;
+            margin-bottom: 15px;
+            color: #4cc9f0;
+            text-shadow: 0 0 15px rgba(76, 201, 240, 0.5);
+        }
+        
+        .back-button {
+            position: absolute;
+            left: 30px;
+            top: 30px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: white;
+            padding: 12px 25px;
+            border-radius: 12px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.3s;
+            font-size: 1rem;
+            font-weight: 500;
+        }
+        
+        .back-button:hover {
+            background: rgba(255, 255, 255, 0.15);
+            border-color: #4cc9f0;
+            transform: translateX(-5px);
+            box-shadow: 0 5px 15px rgba(76, 201, 240, 0.2);
+        }
+        
+        .unit-header-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 20px;
+        }
+        
+        /* CORRECTION : Icône alignée avec le titre */
+        .unit-title-row {
+            display: flex;
+            align-items: center; /* IMPORTANT : Alignement vertical au centre */
+            justify-content: center;
+            gap: 25px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .unit-icon-large {
+            font-size: 3.5rem;
+            color: #4cc9f0;
+            background: rgba(76, 201, 240, 0.1);
+            width: 80px;
+            height: 80px;
+            border-radius: 20px;
+            display: flex;
+            align-items: center; /* Centre verticalement */
+            justify-content: center; /* Centre horizontalement */
+            box-shadow: 0 5px 15px rgba(76, 201, 240, 0.2);
+            flex-shrink: 0; /* Empêche le rétrécissement */
+        }
+        
+        .unit-title-section {
+            text-align: left; /* Alignement à gauche pour être à côté de l'icône */
+        }
+        
+        .unit-title-section h1 {
+            font-size: 2.2rem;
+            background: linear-gradient(to right, #4cc9f0, #f72585);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 10px;
+            line-height: 1.3;
+        }
+        
+        .unit-badge {
+            display: inline-block;
+            background: rgba(67, 97, 238, 0.2);
+            color: #4cc9f0;
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-size: 1.1rem;
+            font-weight: 500;
+            border: 1px solid rgba(76, 201, 240, 0.3);
+        }
+        
+        .unit-meta {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin-top: 25px;
+            flex-wrap: wrap;
+        }
+        
+        .meta-item {
+            text-align: center;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 15px 25px;
+            border-radius: 12px;
+            min-width: 150px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .meta-item:hover {
+            background: rgba(255, 255, 255, 0.08);
+            transform: translateY(-3px);
+            border-color: rgba(76, 201, 240, 0.3);
+        }
+        
+        .meta-label {
+            color: #b8c1ec;
+            font-size: 0.9rem;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .meta-value {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: white;
+        }
+        
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 30px;
+        }
+        
+        .section-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            padding: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+        
+        .section-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+            border-color: rgba(76, 201, 240, 0.3);
+        }
+        
+        .section-title {
+            display: flex;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+        
+        .section-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, #4361ee, #3a0ca3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 20px;
+            font-size: 1.5rem;
+            box-shadow: 0 5px 15px rgba(67, 97, 238, 0.3);
+        }
+        
+        .section-title h2 {
+            font-size: 1.8rem;
+            color: white;
+        }
+        
+        .description {
+            color: #b8c1ec;
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 20px;
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+        
+        .feature-card {
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 15px;
+            padding: 25px;
+            transition: all 0.3s ease;
+            border: 1px solid transparent;
+        }
+        
+        .feature-card:hover {
+            background: rgba(255, 255, 255, 0.12);
+            transform: translateY(-3px);
+            border-color: rgba(76, 201, 240, 0.3);
+        }
+        
+        .feature-icon {
+            font-size: 2rem;
+            color: #4cc9f0;
+            margin-bottom: 15px;
+        }
+        
+        .feature-title {
+            font-size: 1.3rem;
+            color: white;
+            margin-bottom: 10px;
+        }
+        
+        .feature-desc {
+            color: #b8c1ec;
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+        
+        .investment-details {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 20px;
+        }
+        
+        .investment-card {
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 15px;
+            padding: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .investment-amount {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #4cc9f0;
+            margin-bottom: 10px;
+            text-shadow: 0 0 10px rgba(76, 201, 240, 0.3);
+        }
+        
+        .investment-label {
+            color: #b8c1ec;
+            font-size: 1.1rem;
+            margin-bottom: 20px;
+        }
+        
+        .investment-breakdown {
+            margin-top: 20px;
+        }
+        
+        .breakdown-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 12px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .breakdown-item:last-child {
+            border-bottom: none;
+        }
+        
+        .breakdown-label {
+            color: #b8c1ec;
+        }
+        
+        .breakdown-value {
+            color: white;
+            font-weight: 600;
+        }
+        
+        .process-steps {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            margin-top: 20px;
+        }
+        
+        .process-step {
+            display: flex;
+            align-items: flex-start;
+            gap: 25px;
+            padding: 25px;
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 15px;
+            border: 1px solid transparent;
+            transition: all 0.3s ease;
+        }
+        
+        .process-step:hover {
+            background: rgba(255, 255, 255, 0.12);
+            border-color: rgba(76, 201, 240, 0.3);
+            transform: translateX(5px);
+        }
+        
+        .step-number {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #4361ee, #3a0ca3);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: 700;
+            flex-shrink: 0;
+            box-shadow: 0 5px 15px rgba(67, 97, 238, 0.3);
+        }
+        
+        .step-content h4 {
+            font-size: 1.3rem;
+            color: white;
+            margin-bottom: 10px;
+        }
+        
+        .step-content p {
+            color: #b8c1ec;
+            line-height: 1.7;
+        }
+        
+        .machines-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+        
+        .machine-card {
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 15px;
+            padding: 25px;
+            transition: all 0.3s ease;
+            border: 1px solid transparent;
+        }
+        
+        .machine-card:hover {
+            background: rgba(255, 255, 255, 0.12);
+            transform: translateY(-3px);
+            border-color: rgba(76, 201, 240, 0.3);
+        }
+        
+        .machine-name {
+            font-size: 1.3rem;
+            color: white;
+            margin-bottom: 10px;
+        }
+        
+        .machine-specs {
+            color: #b8c1ec;
+            font-size: 0.95rem;
+            margin-bottom: 15px;
+            line-height: 1.5;
+        }
+        
+        .machine-price {
+            color: #4cc9f0;
+            font-weight: 600;
+            font-size: 1.2rem;
+        }
+        
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 25px;
+            margin-top: 20px;
+        }
+        
+        .info-card {
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 15px;
+            padding: 25px;
+            border: 1px solid transparent;
+            transition: all 0.3s ease;
+        }
+        
+        .info-card:hover {
+            background: rgba(255, 255, 255, 0.12);
+            transform: translateY(-3px);
+            border-color: rgba(76, 201, 240, 0.3);
+        }
+        
+        .info-title {
+            color: #4cc9f0;
+            font-size: 1.3rem;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .info-content {
+            color: #b8c1ec;
+            line-height: 1.7;
+        }
+        
+        .info-list {
+            list-style: none;
+            padding-left: 0;
+        }
+        
+        .info-list li {
+            padding: 10px 0;
+            color: #b8c1ec;
+            position: relative;
+            padding-left: 30px;
+            line-height: 1.6;
+        }
+        
+        .info-list li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #4cc9f0;
+            font-weight: bold;
+            font-size: 1.1rem;
+        }
+        
+        .cta-section {
+            text-align: center;
+            padding: 50px 40px;
+            background: linear-gradient(135deg, rgba(67, 97, 238, 0.1), rgba(76, 201, 240, 0.1));
+            border-radius: 20px;
+            border: 1px solid rgba(76, 201, 240, 0.3);
+            margin-top: 20px;
+        }
+        
+        .cta-title {
+            font-size: 2.2rem;
+            color: white;
+            margin-bottom: 20px;
+            background: linear-gradient(to right, #4cc9f0, #f72585);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        
+        .cta-description {
+            color: #b8c1ec;
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto 40px;
+            line-height: 1.7;
+        }
+        
+        .bp-options {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+        }
+        
+        .bp-option {
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 15px;
+            padding: 30px;
+            width: 350px;
+            text-align: center;
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .bp-option:hover {
+            transform: translateY(-5px);
+            border-color: rgba(76, 201, 240, 0.5);
+            box-shadow: 0 10px 25px rgba(76, 201, 240, 0.2);
+        }
+        
+        .bp-option.selected {
+            background: rgba(76, 201, 240, 0.15);
+            border-color: #4cc9f0;
+            box-shadow: 0 5px 20px rgba(76, 201, 240, 0.3);
+        }
+        
+        .bp-icon {
+            font-size: 3rem;
+            color: #4cc9f0;
+            margin-bottom: 20px;
+        }
+        
+        .bp-title {
+            font-size: 1.6rem;
+            color: white;
+            margin-bottom: 15px;
+        }
+        
+        .bp-price {
+            font-size: 2.2rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+        
+        .bp-price.free {
+            color: #00e676;
+            text-shadow: 0 0 10px rgba(0, 230, 118, 0.3);
+        }
+        
+        .bp-price.premium {
+            color: #ff9800;
+            text-shadow: 0 0 10px rgba(255, 152, 0, 0.3);
+        }
+        
+        .bp-features {
+            list-style: none;
+            padding: 0;
+            margin-bottom: 25px;
+            text-align: left;
+        }
+        
+        .bp-features li {
+            padding: 8px 0;
+            color: #b8c1ec;
+            position: relative;
+            padding-left: 25px;
+        }
+        
+        .bp-features li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #4cc9f0;
+            font-weight: bold;
+        }
+        
+        .bp-select-btn {
+            background: rgba(76, 201, 240, 0.2);
+            color: white;
+            border: 2px solid #4cc9f0;
+            padding: 12px 30px;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            width: 100%;
+        }
+        
+        .bp-select-btn:hover {
+            background: rgba(76, 201, 240, 0.3);
+            transform: translateY(-2px);
+        }
+        
+        .services-section {
+            margin-top: 40px;
+            padding: 30px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .services-title {
+            text-align: center;
+            font-size: 1.8rem;
+            color: white;
+            margin-bottom: 30px;
+            background: linear-gradient(to right, #4cc9f0, #f72585);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-top: 20px;
+        }
+        
+        .service-card {
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 15px;
+            padding: 25px;
+            text-align: center;
+            border: 1px solid transparent;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        .service-card:hover {
+            background: rgba(255, 255, 255, 0.12);
+            transform: translateY(-5px);
+            border-color: rgba(76, 201, 240, 0.3);
+        }
+        
+        .service-card.selected {
+            background: rgba(76, 201, 240, 0.15);
+            border-color: #4cc9f0;
+        }
+        
+        .service-icon {
+            font-size: 2.5rem;
+            color: #4cc9f0;
+            margin-bottom: 20px;
+        }
+        
+        .service-title {
+            font-size: 1.4rem;
+            color: white;
+            margin-bottom: 15px;
+        }
+        
+        .service-price {
+            font-size: 1.8rem;
+            color: #ff9800;
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+        
+        .service-desc {
+            color: #b8c1ec;
+            font-size: 0.95rem;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+        
+        .service-select-btn {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            width: 100%;
+        }
+        
+        .service-select-btn:hover {
+            background: rgba(255, 255, 255, 0.15);
+            border-color: #4cc9f0;
+        }
+        
+        .service-select-btn.selected {
+            background: rgba(76, 201, 240, 0.2);
+            border-color: #4cc9f0;
+            color: #4cc9f0;
+        }
+        
+        /* NOUVEAU : Section panier */
+        .cart-section {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 30px;
+            margin-top: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .cart-title {
+            font-size: 1.6rem;
+            color: white;
+            margin-bottom: 25px;
+            text-align: center;
+            background: linear-gradient(to right, #4cc9f0, #f72585);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        
+        .cart-items {
+            margin-bottom: 25px;
+        }
+        
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 10px;
+            margin-bottom: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .cart-item-name {
+            font-size: 1.1rem;
+            color: white;
+        }
+        
+        .cart-item-price {
+            font-size: 1.2rem;
+            color: #4cc9f0;
+            font-weight: 600;
+        }
+        
+        .cart-total {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 20px;
+            border-top: 2px solid rgba(255, 255, 255, 0.1);
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: white;
+        }
+        
+        .total-amount {
+            color: #00e676;
+            font-size: 2rem;
+            text-shadow: 0 0 10px rgba(0, 230, 118, 0.3);
+        }
+        
+        .buttons-container {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin-top: 30px;
+        }
+        
+        .btn {
+            padding: 18px 45px;
+            border-radius: 12px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            min-width: 250px;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(to right, #4cc9f0, #4361ee);
+            color: white;
+            box-shadow: 0 5px 15px rgba(76, 201, 240, 0.3);
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(76, 201, 240, 0.4);
+        }
+        
+        .btn-free {
+            background: linear-gradient(to right, #00e676, #00c853);
+            color: white;
+            box-shadow: 0 5px 15px rgba(0, 230, 118, 0.3);
+        }
+        
+        .btn-free:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 230, 118, 0.4);
+        }
+        
+        .btn-cart {
+            background: linear-gradient(to right, #ff9800, #ff5722);
+            color: white;
+            box-shadow: 0 5px 15px rgba(255, 152, 0, 0.3);
+        }
+        
+        .btn-cart:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(255, 152, 0, 0.4);
+        }
+        
+        @media (max-width: 768px) {
+            .back-button {
+                position: relative;
+                left: auto;
+                top: auto;
+                margin-bottom: 20px;
+                justify-content: center;
+                width: 100%;
+            }
+            
+            /* CORRECTION pour mobile : empiler icône et titre */
+            .unit-title-row {
+                flex-direction: column;
+                text-align: center;
+                gap: 15px;
+            }
+            
+            .unit-title-section {
+                text-align: center; /* Centrer sur mobile */
+            }
+            
+            .unit-meta {
+                flex-direction: column;
+                gap: 15px;
+                align-items: center;
+            }
+            
+            .meta-item {
+                width: 100%;
+                max-width: 300px;
+            }
+            
+            .bp-options {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .bp-option {
+                width: 100%;
+                max-width: 350px;
+            }
+            
+            .buttons-container {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .btn {
+                width: 100%;
+                max-width: 350px;
+            }
+            
+            .features-grid, .machines-grid, .info-grid, .services-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .investment-details {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <button class="back-button" id="back-button">
+                <i class="fas fa-arrow-left"></i>
+                Retour au choix des unités
+            </button>
+            
+            <div class="logo">
+                <i class="fas fa-industry"></i>
+            </div>
+            
+            <div class="unit-header-container">
+                <!-- CORRECTION : Icône alignée avec le titre -->
+                <div class="unit-title-row">
+                    <div class="unit-icon-large" id="unit-icon">
+                        <i class="fas fa-oil-can"></i>
+                    </div>
+                    <div class="unit-title-section">
+                        <h1 id="unit-title">Production d'huile de palme raffinée</h1>
+                        <div class="unit-badge" id="unit-type">Transformation agro-alimentaire</div>
+                    </div>
+                </div>
+                
+                <div class="unit-meta">
+                    <div class="meta-item">
+                        <div class="meta-label">Investissement minimum</div>
+                        <div class="meta-value" id="investment-min">80k $</div>
+                    </div>
+                    <div class="meta-item">
+                        <div class="meta-label">Filière</div>
+                        <div class="meta-value" id="filiere-name">Agro-alimentaire & Boissons</div>
+                    </div>
+                    <div class="meta-item">
+                        <div class="meta-label">Création d'emplois</div>
+                        <div class="meta-value" id="jobs-created">8-12 emplois</div>
+                    </div>
+                    <div class="meta-item">
+                        <div class="meta-label">ROI estimé</div>
+                        <div class="meta-value" id="roi-estimated">3-4 ans</div>
+                    </div>
+                </div>
+            </div>
+        </header>
+        
+        <div class="main-content">
+            <!-- Section Description -->
+            <section class="section-card">
+                <div class="section-title">
+                    <div class="section-icon">
+                        <i class="fas fa-info-circle"></i>
+                    </div>
+                    <h2>Description détaillée</h2>
+                </div>
+                <div class="description" id="detailed-description">
+                    Cette unité de production spécialisée dans le raffinage d'huile de palme permet de transformer 
+                    l'huile de palme brute en huile raffinée de haute qualité, adaptée à la consommation humaine 
+                    et à l'industrie alimentaire. L'unité utilise des technologies modernes de raffinage physique 
+                    et chimique pour éliminer les impuretés, les acides gras libres et les pigments, tout en 
+                    préservant les qualités nutritionnelles de l'huile.<br><br>
+                    
+                    Le processus comprend le dégommage, la neutralisation, le blanchiment, la désodorisation 
+                    et le winterisation. L'huile raffinée produite répond aux normes internationales de qualité 
+                    et peut être commercialisée sur le marché local ou exportée vers les pays voisins.
+                </div>
+                
+                <div class="features-grid" id="key-features">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-leaf"></i>
+                        </div>
+                        <h3 class="feature-title">Qualité alimentaire</h3>
+                        <p class="feature-desc">Huile raffinée répondant aux normes CODEX pour la consommation humaine</p>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-recycle"></i>
+                        </div>
+                        <h3 class="feature-title">Processus durable</h3>
+                        <p class="feature-desc">Valorisation des sous-produits (tourteaux pour l'alimentation animale)</p>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <h3 class="feature-title">Rentabilité élevée</h3>
+                        <p class="feature-desc">Marge brute de 35-45% grâce à la valeur ajoutée du raffinage</p>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-cogs"></i>
+                        </div>
+                        <h3 class="feature-title">Technologie moderne</h3>
+                        <p class="feature-desc">Équipements semi-automatisés avec contrôle de qualité intégré</p>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Section Investissement -->
+            <section class="section-card">
+                <div class="section-title">
+                    <div class="section-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h2>Détails de l'investissement</h2>
+                </div>
+                
+                <div class="investment-details">
+                    <div class="investment-card">
+                        <div class="investment-amount" id="investment-total">95k $</div>
+                        <div class="investment-label">Investissement total estimé</div>
+                        
+                        <div class="investment-breakdown">
+                            <div class="breakdown-item">
+                                <span class="breakdown-label">Machines & Équipements</span>
+                                <span class="breakdown-value" id="breakdown-machines">45k $</span>
+                            </div>
+                            <div class="breakdown-item">
+                                <span class="breakdown-label">Installation & Aménagement</span>
+                                <span class="breakdown-value" id="breakdown-installation">20k $</span>
+                            </div>
+                            <div class="breakdown-item">
+                                <span class="breakdown-label">Fonds de roulement</span>
+                                <span class="breakdown-value" id="breakdown-working-capital">20k $</span>
+                            </div>
+                            <div class="breakdown-item">
+                                <span class="breakdown-label">Formation & Conseil</span>
+                                <span class="breakdown-value" id="breakdown-training">10k $</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="investment-card">
+                        <div class="investment-amount" id="monthly-production">15,000 L</div>
+                        <div class="investment-label">Capacité de production mensuelle</div>
+                        
+                        <div class="investment-breakdown">
+                            <div class="breakdown-item">
+                                <span class="breakdown-label">Chiffre d'affaires estimé</span>
+                                <span class="breakdown-value" id="estimated-revenue">180k $/an</span>
+                            </div>
+                            <div class="breakdown-item">
+                                <span class="breakdown-label">Marge brute</span>
+                                <span class="breakdown-value" id="gross-margin">40%</span>
+                            </div>
+                            <div class="breakdown-item">
+                                <span class="breakdown-label">Rentabilité nette</span>
+                                <span class="breakdown-value" id="profitability">25%</span>
+                            </div>
+                            <div class="breakdown-item">
+                                <span class="breakdown-label">Retour sur investissement</span>
+                                <span class="breakdown-value" id="roi-detail">3-4 ans</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Section Processus de production -->
+            <section class="section-card">
+                <div class="section-title">
+                    <div class="section-icon">
+                        <i class="fas fa-industry"></i>
+                    </div>
+                    <h2>Processus de production</h2>
+                </div>
+                
+                <div class="process-steps" id="production-process">
+                    <div class="process-step">
+                        <div class="step-number">1</div>
+                        <div class="step-content">
+                            <h4>Réception et contrôle qualité</h4>
+                            <p>Contrôle des matières premières (huile de palme brute) pour vérifier l'acidité, l'humidité et les impuretés avant transformation.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="process-step">
+                        <div class="step-number">2</div>
+                        <div class="step-content">
+                            <h4>Dégommage et neutralisation</h4>
+                            <p>Élimination des gommes et des acides gras libres par traitement chimique et physique pour améliorer la stabilité de l'huile.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="process-step">
+                        <div class="step-number">3</div>
+                        <div class="step-content">
+                            <h4>Blanchiment et filtration</h4>
+                            <p>Élimination des pigments et des métaux lourds par adsorption sur terre décolorante suivie d'une filtration précise.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="process-step">
+                        <div class="step-number">4</div>
+                        <div class="step-content">
+                            <h4>Désodorisation</h4>
+                            <p>Élimination des composés odorants par distillation à la vapeur sous vide pour obtenir une huile neutre et stable.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="process-step">
+                        <div class="step-number">5</div>
+                        <div class="step-content">
+                            <h4>Conditionnement et stockage</h4>
+                            <p>Mise en bouteille/bidons et stockage dans des conditions optimales de température et d'hygrométrie.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Section Machines et Équipements -->
+            <section class="section-card">
+                <div class="section-title">
+                    <div class="section-icon">
+                        <i class="fas fa-cogs"></i>
+                    </div>
+                    <h2>Machines et Équipements</h2>
+                </div>
+                
+                <div class="machines-grid" id="machines-list">
+                    <div class="machine-card">
+                        <h3 class="machine-name">Raffineur continu</h3>
+                        <p class="machine-specs">Capacité : 500 kg/heure • Automatisation : PLC • Marque : Alibaba Premium</p>
+                        <div class="machine-price">18,000 $</div>
+                    </div>
+                    
+                    <div class="machine-card">
+                        <h3 class="machine-name">Désodoriseur sous vide</h3>
+                        <p class="machine-specs">Capacité : 300 kg/batch • Température : 240°C • Acier inoxydable</p>
+                        <div class="machine-price">12,500 $</div>
+                    </div>
+                    
+                    <div class="machine-card">
+                        <h3 class="machine-name">Filtre presse automatique</h3>
+                        <p class="machine-specs">Surface de filtration : 20 m² • Automatique • Lavage intégré</p>
+                        <div class="machine-price">8,000 $</div>
+                    </div>
+                    
+                    <div class="machine-card">
+                        <h3 class="machine-name">Ligne de conditionnement</h3>
+                        <p class="machine-specs">Capacité : 1,000 bouteilles/heure • Remplissage automatique • Étiquetage</p>
+                        <div class="machine-price">6,500 $</div>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Section Informations complémentaires -->
+            <section class="section-card">
+                <div class="section-title">
+                    <div class="section-icon">
+                        <i class="fas fa-clipboard-list"></i>
+                    </div>
+                    <h2>Informations complémentaires</h2>
+                </div>
+                
+                <div class="info-grid">
+                    <div class="info-card">
+                        <h3 class="info-title"><i class="fas fa-user-friends"></i> Emplois créés</h3>
+                        <div class="info-content" id="jobs-details">
+                            <p><strong>Directs :</strong> 8-12 employés (opérateurs, techniciens, contrôle qualité)<br>
+                            <strong>Indirects :</strong> 5-8 emplois (logistique, administration, maintenance)<br>
+                            <strong>Formation :</strong> Programme de 3 mois pris en charge par la PIG</p>
+                        </div>
+                    </div>
+                    
+                    <div class="info-card">
+                        <h3 class="info-title"><i class="fas fa-box"></i> Matières premières</h3>
+                        <ul class="info-list" id="raw-materials">
+                            <li>Huile de palme brute (production locale)</li>
+                            <li>Soude caustique pour neutralisation</li>
+                            <li>Terre décolorante (bentonite)</li>
+                            <li>Acide citrique et phosphorique</li>
+                            <li>Emballages (bouteilles PET, bidons)</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="info-card">
+                        <h3 class="info-title"><i class="fas fa-bullseye"></i> Marchés cibles</h3>
+                        <ul class="info-list" id="target-markets">
+                            <li>Supermarchés et épiceries en Guinée</li>
+                            <li>Industrie alimentaire (biscuiterie, margarinerie)</li>
+                            <li>Restauration collective et hôtellerie</li>
+                            <li>Export vers Mali, Sénégal, Côte d'Ivoire</li>
+                            <li>Marché institutionnel (hôpitaux, écoles)</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="info-card">
+                        <h3 class="info-title"><i class="fas fa-lightbulb"></i> Avantages compétitifs</h3>
+                        <ul class="info-list" id="competitive-advantages">
+                            <li>Première unité de raffinage dans la région</li>
+                            <li>Accès direct aux plantations locales de palmiers</li>
+                            <li>Coûts de production 30% inférieurs aux importations</li>
+                            <li>Soutien technique et formation par la PIG</li>
+                            <li>Accords avec Alibaba pour machines garanties</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Section Choix du Business Plan -->
+            <section class="cta-section">
+                <h2 class="cta-title">Choisissez votre Business Plan</h2>
+                <p class="cta-description">
+                    La PIG vous accompagne dès le début de votre projet. Commencez avec notre BP gratuit 
+                    pour découvrir le potentiel, puis passez au BP complet pour une analyse approfondie.
+                </p>
+                
+                <div class="bp-options">
+                    <!-- Business Plan Gratuit -->
+                    <div class="bp-option" id="bp-gratuit">
+                        <div class="bp-icon">
+                            <i class="fas fa-file-alt"></i>
+                        </div>
+                        <h3 class="bp-title">Business Plan Sommaire</h3>
+                        <div class="bp-price free">GRATUIT</div>
+                        <ul class="bp-features">
+                            <li>Étude de marché synthétique</li>
+                            <li>Plan technique basique</li>
+                            <li>Investissement minimum requis</li>
+                            <li>ROI estimé et opportunités</li>
+                            <li>Liste des équipements essentiels</li>
+                            <li>Format PDF téléchargeable</li>
+                            <li>Délai : 48 heures</li>
+                        </ul>
+                        <button class="bp-select-btn" data-bp="gratuit">
+                            <i class="fas fa-download"></i> Télécharger gratuitement
+                        </button>
+                    </div>
+                    
+                    <!-- Business Plan Complet -->
+                    <div class="bp-option" id="bp-complet">
+                        <div class="bp-icon">
+                            <i class="fas fa-file-contract"></i>
+                        </div>
+                        <h3 class="bp-title">Business Plan Complet</h3>
+                        <div class="bp-price premium">199 $</div>
+                        <ul class="bp-features">
+                            <li>Étude de marché approfondie (SWOT)</li>
+                            <li>Plan technique détaillé avec plans</li>
+                            <li>Analyse financière sur 5 ans</li>
+                            <li>Recherche de fournisseurs machines</li>
+                            <li>Plan de formation de l'équipe</li>
+                            <li>Accompagnement démarrage (1 mois)</li>
+                            <li>Délai : 2 semaines</li>
+                        </ul>
+                        <button class="bp-select-btn" data-bp="complet">
+                            <i class="fas fa-shopping-cart"></i> Commander maintenant
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Section Services Additionnels (visible après sélection BP Complet) -->
+                <div class="services-section" id="services-section" style="display: none;">
+                    <h3 class="services-title">Ajoutez des Services Additionnels</h3>
+                    <p style="color: #b8c1ec; text-align: center; margin-bottom: 30px; font-size: 1.1rem;">
+                        Personnalisez votre accompagnement en ajoutant les services dont vous avez besoin :
+                    </p>
+                    
+                    <div class="services-grid" id="services-grid">
+                        <!-- Les services seront générés dynamiquement -->
+                    </div>
+                    
+                    <!-- NOUVEAU : Section panier -->
+                    <div class="cart-section" id="cart-section" style="display: none;">
+                        <h3 class="cart-title">Votre Sélection</h3>
+                        <div class="cart-items" id="cart-items">
+                            <!-- Les items du panier seront ajoutés ici -->
+                        </div>
+                        <div class="cart-total">
+                            <span>Total à payer :</span>
+                            <span class="total-amount" id="total-amount">199 $</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="buttons-container" id="main-buttons">
+                    <button class="btn btn-free" id="download-bp-btn">
+                        <i class="fas fa-download"></i> Télécharger le BP Gratuit
+                    </button>
+                    <button class="btn btn-primary" id="order-bp-btn" style="display: none;">
+                        <i class="fas fa-shopping-cart"></i> Commander le BP Complet (199$)
+                    </button>
+                    <button class="btn btn-cart" id="order-with-services-btn" style="display: none;">
+                        <i class="fas fa-shopping-cart"></i> Payer <span id="total-button-amount">199 $</span>
+                    </button>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <script>
+        // Données JSON pour une unité
+        const unitData = {
+            id: "huile-palme",
+            name: "Production d'huile de palme raffinée",
+            type: "Transformation agro-alimentaire",
+            filiere: "Agro-alimentaire & Boissons",
+            minInvestment: 80,
+            jobsCreated: "8-12 emplois directs",
+            roiEstimated: "3-4 ans",
+            icon: "fas fa-oil-can",
+        };
+
+        // Données des services additionnels
+        const servicesData = [
+            {
+                id: "comptable",
+                name: "Accompagnement Comptable",
+                icon: "fas fa-calculator",
+                price: 50,
+                period: "par mois",
+                description: "Gestion complète de votre comptabilité, déclarations fiscales et conseils financiers mensuels",
+                type: "recurrent"
+            },
+            {
+                id: "machines",
+                name: "Achat de Machines",
+                icon: "fas fa-cogs",
+                price: "5-10%",
+                period: "commission",
+                description: "Nous négocions vos machines chez Alibaba avec garantie qualité et pièces détachées",
+                type: "commission"
+            },
+            {
+                id: "formations",
+                name: "Formations Spécialisées",
+                icon: "fas fa-graduation-cap",
+                price: 50,
+                period: "par session",
+                description: "Formations sur la gestion d'usine, maintenance des machines, contrôle qualité",
+                type: "one-time"
+            },
+            {
+                id: "audit",
+                name: "Audit de Performance",
+                icon: "fas fa-chart-line",
+                price: 150,
+                period: "par audit",
+                description: "Analyse complète de votre unité avec recommandations d'optimisation",
+                type: "one-time"
+            }
+        ];
+
+        // Variables globales
+        let selectedBusinessPlan = null;
+        let selectedServices = new Set(); // Pour stocker les IDs des services sélectionnés
+        let cartItems = [
+            { id: "bp-complet", name: "Business Plan Complet", price: 199 }
+        ]; // Panier initial avec BP Complet
+
+        // Initialisation de la page
+        document.addEventListener('DOMContentLoaded', function() {
+            // Remplir les services additionnels
+            populateServices();
+            
+            // Écouteurs d'événements
+            setupEventListeners();
+            
+            // Initialiser le panier
+            updateCart();
+        });
+
+        // Remplir les services additionnels
+        function populateServices() {
+            const servicesGrid = document.getElementById('services-grid');
+            servicesGrid.innerHTML = '';
+            
+            servicesData.forEach(service => {
+                const serviceCard = document.createElement('div');
+                serviceCard.className = 'service-card';
+                serviceCard.id = `service-${service.id}`;
+                serviceCard.setAttribute('data-service', service.id);
+                
+                let priceDisplay = service.type === 'commission' 
+                    ? `${service.price}` 
+                    : `${service.price} $`;
+                
+                serviceCard.innerHTML = `
+                    <div class="service-icon">
+                        <i class="${service.icon}"></i>
+                    </div>
+                    <h4 class="service-title">${service.name}</h4>
+                    <div class="service-price">${priceDisplay} <small>${service.period}</small></div>
+                    <p class="service-desc">${service.description}</p>
+                    <button class="service-select-btn" data-service="${service.id}">
+                        <i class="fas fa-plus"></i> Ajouter au panier
+                    </button>
+                `;
+                
+                servicesGrid.appendChild(serviceCard);
+            });
+        }
+
+        // Configurer les écouteurs d'événements
+        function setupEventListeners() {
+            // Bouton retour
+            document.getElementById('back-button').addEventListener('click', function() {
+                window.history.back();
+            });
+            
+            // Sélection des Business Plans
+            document.querySelectorAll('.bp-select-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const bpType = this.getAttribute('data-bp');
+                    selectBusinessPlan(bpType);
+                });
+            });
+            
+            // Bouton télécharger BP gratuit
+            document.getElementById('download-bp-btn').addEventListener('click', function() {
+                downloadBusinessPlan('gratuit');
+            });
+            
+            // Bouton commander BP complet (sans services)
+            document.getElementById('order-bp-btn').addEventListener('click', function() {
+                orderBusinessPlan('complet', false);
+            });
+            
+            // Bouton commander avec services
+            document.getElementById('order-with-services-btn').addEventListener('click', function() {
+                orderBusinessPlan('complet', true);
+            });
+            
+            // Délégation d'événement pour les boutons d'ajout de services
+            document.getElementById('services-grid').addEventListener('click', function(e) {
+                if (e.target.closest('.service-select-btn')) {
+                    const btn = e.target.closest('.service-select-btn');
+                    const serviceId = btn.getAttribute('data-service');
+                    toggleService(serviceId, btn);
+                }
+            });
+        }
+
+        // Sélectionner un Business Plan
+        function selectBusinessPlan(bpType) {
+            selectedBusinessPlan = bpType;
+            
+            // Mettre à jour l'interface
+            document.querySelectorAll('.bp-option').forEach(option => {
+                option.classList.remove('selected');
+            });
+            
+            document.getElementById(`bp-${bpType}`).classList.add('selected');
+            
+            // Gérer l'affichage selon le type de BP
+            const servicesSection = document.getElementById('services-section');
+            const cartSection = document.getElementById('cart-section');
+            const downloadBtn = document.getElementById('download-bp-btn');
+            const orderBtn = document.getElementById('order-bp-btn');
+            const orderWithServicesBtn = document.getElementById('order-with-services-btn');
+            
+            if (bpType === 'gratuit') {
+                // BP Gratuit
+                servicesSection.style.display = 'none';
+                cartSection.style.display = 'none';
+                downloadBtn.style.display = 'flex';
+                orderBtn.style.display = 'none';
+                orderWithServicesBtn.style.display = 'none';
+                
+                // Réinitialiser les services sélectionnés
+                selectedServices.clear();
+                cartItems = [];
+                updateCart();
+                
+            } else {
+                // BP Complet
+                servicesSection.style.display = 'block';
+                
+                // Animation douce
+                servicesSection.style.opacity = '0';
+                setTimeout(() => {
+                    servicesSection.style.transition = 'opacity 0.5s ease';
+                    servicesSection.style.opacity = '1';
+                }, 10);
+                
+                // Afficher le panier si des services sont sélectionnés
+                if (selectedServices.size > 0) {
+                    cartSection.style.display = 'block';
+                    orderBtn.style.display = 'none';
+                    orderWithServicesBtn.style.display = 'flex';
+                } else {
+                    cartSection.style.display = 'none';
+                    orderBtn.style.display = 'flex';
+                    orderWithServicesBtn.style.display = 'none';
+                }
+                
+                downloadBtn.style.display = 'none';
+                
+                // Réinitialiser et ajouter le BP Complet au panier
+                selectedServices.clear();
+                cartItems = [{ id: "bp-complet", name: "Business Plan Complet", price: 199 }];
+                updateCart();
+            }
+            
+            // Réinitialiser les boutons de service
+            document.querySelectorAll('.service-select-btn').forEach(btn => {
+                btn.innerHTML = '<i class="fas fa-plus"></i> Ajouter au panier';
+                btn.classList.remove('selected');
+            });
+            
+            document.querySelectorAll('.service-card').forEach(card => {
+                card.classList.remove('selected');
+            });
+            
+            console.log(`Business Plan ${bpType} sélectionné`);
+        }
+
+        // Ajouter/retirer un service
+        function toggleService(serviceId, button) {
+            const service = servicesData.find(s => s.id === serviceId);
+            if (!service) return;
+            
+            const serviceCard = document.getElementById(`service-${serviceId}`);
+            
+            if (selectedServices.has(serviceId)) {
+                // Retirer le service
+                selectedServices.delete(serviceId);
+                cartItems = cartItems.filter(item => item.id !== serviceId);
+                button.innerHTML = '<i class="fas fa-plus"></i> Ajouter au panier';
+                button.classList.remove('selected');
+                serviceCard.classList.remove('selected');
+            } else {
+                // Ajouter le service
+                selectedServices.add(serviceId);
+                
+                let price = 0;
+                if (service.type === 'commission') {
+                    price = 0; // Commission calculée plus tard
+                } else {
+                    price = service.price;
+                }
+                
+                cartItems.push({
+                    id: serviceId,
+                    name: service.name,
+                    price: price,
+                    type: service.type,
+                    period: service.period
+                });
+                
+                button.innerHTML = '<i class="fas fa-check"></i> Ajouté';
+                button.classList.add('selected');
+                serviceCard.classList.add('selected');
+            }
+            
+            // Mettre à jour le panier
+            updateCart();
+            
+            // Mettre à jour l'affichage des boutons
+            const cartSection = document.getElementById('cart-section');
+            const orderBtn = document.getElementById('order-bp-btn');
+            const orderWithServicesBtn = document.getElementById('order-with-services-btn');
+            
+            if (selectedServices.size > 0) {
+                cartSection.style.display = 'block';
+                orderBtn.style.display = 'none';
+                orderWithServicesBtn.style.display = 'flex';
+            } else {
+                cartSection.style.display = 'none';
+                orderBtn.style.display = 'flex';
+                orderWithServicesBtn.style.display = 'none';
+            }
+        }
+
+        // Mettre à jour le panier
+        function updateCart() {
+            const cartItemsContainer = document.getElementById('cart-items');
+            const totalAmountElement = document.getElementById('total-amount');
+            const totalButtonAmount = document.getElementById('total-button-amount');
+            
+            // Vider le conteneur
+            cartItemsContainer.innerHTML = '';
+            
+            // Calculer le total
+            let total = 0;
+            
+            // Ajouter chaque item au panier
+            cartItems.forEach(item => {
+                const cartItem = document.createElement('div');
+                cartItem.className = 'cart-item';
+                
+                let priceText = '';
+                if (item.type === 'commission') {
+                    priceText = `${item.price} commission`;
+                } else {
+                    priceText = `${item.price} $`;
+                    total += item.price;
+                }
+                
+                cartItem.innerHTML = `
+                    <span class="cart-item-name">${item.name}</span>
+                    <span class="cart-item-price">${priceText}</span>
+                `;
+                
+                cartItemsContainer.appendChild(cartItem);
+            });
+            
+            // Mettre à jour le total
+            totalAmountElement.textContent = `${total} $`;
+            totalButtonAmount.textContent = `${total} $`;
+        }
+
+        // Télécharger le BP gratuit
+        function downloadBusinessPlan(type) {
+            if (type !== 'gratuit') return;
+            
+            const message = `Téléchargement du Business Plan Gratuit pour :
+            - Unité : ${unitData.name}
+            - Filière : ${unitData.filiere}
+            
+            Votre PDF est en cours de génération...
+            Un email avec le lien de téléchargement vous sera envoyé dans quelques minutes.`;
+            
+            alert(message);
+        }
+
+        // Commander le BP complet
+        function orderBusinessPlan(type, withServices) {
+            if (type !== 'complet') return;
+            
+            let message = `Commande du Business Plan Complet `;
+            let total = 199;
+            
+            if (withServices && selectedServices.size > 0) {
+                message += `avec services additionnels :\n\n`;
+                message += `- Business Plan Complet : 199 $\n`;
+                
+                selectedServices.forEach(serviceId => {
+                    const service = servicesData.find(s => s.id === serviceId);
+                    if (service && service.type !== 'commission') {
+                        message += `- ${service.name} : ${service.price} $ ${service.period}\n`;
+                        total += service.price;
+                    } else if (service && service.type === 'commission') {
+                        message += `- ${service.name} : ${service.price} ${service.period}\n`;
+                    }
+                });
+                
+                message += `\n─────────────────\n`;
+                message += `TOTAL : ${total} $\n\n`;
+            } else {
+                message += `:\n`;
+                message += `- Prix : 199 $ US\n`;
+            }
+            
+            message += `- Délai : 2 semaines\n`;
+            message += `- Unité : ${unitData.name}\n`;
+            message += `- Filière : ${unitData.filiere}\n\n`;
+            message += `Vous allez être redirigé vers la page de paiement sécurisé.`;
+            
+            alert(message);
+        }
+    </script>
+</body>
+</html>

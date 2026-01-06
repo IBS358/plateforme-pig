@@ -1,0 +1,1118 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plateforme Industrielle Guinéenne (PIG) | Accueil</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* ===== RESET & BASE STYLES ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #0d1b2a 0%, #1b263b 100%);
+            color: white;
+            line-height: 1.6;
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* ===== ANIMATIONS ===== */
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(76, 201, 240, 0.7); }
+            70% { box-shadow: 0 0 0 15px rgba(76, 201, 240, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(76, 201, 240, 0); }
+        }
+
+        @keyframes shimmer {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        /* ===== HEADER & NAVIGATION ===== */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            background: rgba(13, 27, 42, 0.9);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(76, 201, 240, 0.1);
+            padding: 15px 0;
+            transition: all 0.3s ease;
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        /* Logo avec 3 dents tournantes */
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logo-icon {
+            width: 50px;
+            height: 50px;
+            position: relative;
+        }
+
+        .gear {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            border: 3px solid #4cc9f0;
+        }
+
+        .gear-large {
+            animation: rotate 20s linear infinite;
+        }
+
+        .gear-medium {
+            width: 70%;
+            height: 70%;
+            top: 15%;
+            left: 15%;
+            animation: rotate 15s linear infinite reverse;
+        }
+
+        .gear-small {
+            width: 40%;
+            height: 40%;
+            top: 30%;
+            left: 30%;
+            animation: rotate 10s linear infinite;
+        }
+
+        .logo-text {
+            font-size: 1.8rem;
+            font-weight: 700;
+            background: linear-gradient(to right, #4cc9f0, #f72585);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        /* Navigation */
+        nav ul {
+            display: flex;
+            gap: 40px;
+            list-style: none;
+        }
+
+        nav a {
+            color: #b8c1ec;
+            text-decoration: none;
+            font-size: 1.1rem;
+            font-weight: 500;
+            transition: all 0.3s;
+            position: relative;
+            padding: 5px 0;
+        }
+
+        nav a:hover {
+            color: #4cc9f0;
+        }
+
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(to right, #4cc9f0, #f72585);
+            transition: width 0.3s ease;
+        }
+
+        nav a:hover::after {
+            width: 100%;
+        }
+
+        /* ===== HERO SECTION ===== */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            padding-top: 100px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-content {
+            max-width: 900px;
+            margin: 0 auto;
+            text-align: center;
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero h1 {
+            font-size: 4.5rem;
+            background: linear-gradient(to right, #4cc9f0, #f72585);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 20px;
+            line-height: 1.1;
+            text-shadow: 0 0 30px rgba(76, 201, 240, 0.3);
+        }
+
+        .hero-subtitle {
+            font-size: 1.8rem;
+            color: #b8c1ec;
+            margin-bottom: 30px;
+            font-weight: 300;
+        }
+
+        .hero-description {
+            font-size: 1.2rem;
+            color: #b8c1ec;
+            max-width: 700px;
+            margin: 0 auto 40px;
+            line-height: 1.8;
+        }
+
+        .hero-stats {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-bottom: 50px;
+            flex-wrap: wrap;
+        }
+
+        .stat-item {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 15px 25px;
+            border-radius: 12px;
+            border: 1px solid rgba(76, 201, 240, 0.1);
+            font-size: 1.1rem;
+            color: #b8c1ec;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: block;
+        }
+
+        .stat-item:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: #4cc9f0;
+            transform: translateY(-5px);
+            cursor: pointer;
+        }
+
+        .stat-item strong {
+            color: #4cc9f0;
+            font-weight: 700;
+        }
+
+        /* Bouton hero principal */
+        .btn-hero {
+            background: linear-gradient(to right, #4cc9f0, #4361ee);
+            color: white;
+            border: none;
+            padding: 20px 50px;
+            border-radius: 15px;
+            font-size: 1.3rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(76, 201, 240, 0.3);
+            animation: float 3s ease-in-out infinite;
+        }
+
+        .btn-hero:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 15px 40px rgba(76, 201, 240, 0.4);
+            animation: none;
+        }
+
+        .btn-hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: left 0.7s;
+        }
+
+        .btn-hero:hover::before {
+            left: 100%;
+        }
+
+        /* ===== STATS SECTION ===== */
+        .stats-section {
+            padding: 80px 0;
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+        }
+
+        .stat-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            padding: 40px 30px;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+            text-decoration: none;
+            display: block;
+            color: inherit;
+        }
+
+        .stat-card:hover {
+            background: rgba(255, 255, 255, 0.08);
+            transform: translateY(-10px);
+            border-color: #4cc9f0;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .stat-icon {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            color: #4cc9f0;
+        }
+
+        .stat-number {
+            font-size: 3rem;
+            font-weight: 700;
+            background: linear-gradient(to right, #4cc9f0, #f72585);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 10px;
+        }
+
+        .stat-label {
+            color: #b8c1ec;
+            font-size: 1.1rem;
+        }
+
+        /* ===== PROCESS SECTION ===== */
+        .process-section {
+            padding: 100px 0;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 60px;
+            background: linear-gradient(to right, #4cc9f0, #f72585);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .process-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+        }
+
+        .process-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            padding: 40px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+            text-decoration: none;
+            backdrop-filter: blur(10px);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .process-card:hover {
+            background: rgba(255, 255, 255, 0.08);
+            transform: translateY(-10px);
+            border-color: #4cc9f0;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .process-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 5px;
+            height: 100%;
+            background: linear-gradient(to bottom, #4361ee, #f72585);
+            transform: scaleY(0);
+            transition: transform 0.3s ease;
+        }
+
+        .process-card:hover::before {
+            transform: scaleY(1);
+        }
+
+        .process-number {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #4cc9f0;
+            margin-bottom: 20px;
+        }
+
+        .process-icon {
+            font-size: 3rem;
+            margin-bottom: 25px;
+            color: #4cc9f0;
+        }
+
+        .process-title {
+            font-size: 1.8rem;
+            color: white;
+            margin-bottom: 15px;
+        }
+
+        .process-description {
+            color: #b8c1ec;
+            font-size: 1.1rem;
+            line-height: 1.7;
+            margin-bottom: 20px;
+        }
+
+        .process-cta {
+            color: #4cc9f0;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: gap 0.3s ease;
+        }
+
+        .process-card:hover .process-cta {
+            gap: 15px;
+        }
+
+        /* ===== BENEFITS SECTION ===== */
+        .benefits-section {
+            padding: 80px 0;
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .benefit-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            padding: 40px 30px;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .benefit-card:hover {
+            background: rgba(255, 255, 255, 0.08);
+            transform: translateY(-5px);
+            border-color: #4cc9f0;
+        }
+
+        .benefit-icon {
+            font-size: 2.5rem;
+            margin-bottom: 25px;
+            color: #4cc9f0;
+        }
+
+        .benefit-title {
+            font-size: 1.5rem;
+            color: white;
+            margin-bottom: 15px;
+        }
+
+        .benefit-description {
+            color: #b8c1ec;
+            font-size: 1rem;
+            line-height: 1.7;
+        }
+
+        /* ===== CTA SECTION ===== */
+        .cta-section {
+            padding: 100px 0;
+            text-align: center;
+        }
+
+        .cta-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .cta-title {
+            font-size: 3rem;
+            margin-bottom: 30px;
+            background: linear-gradient(to right, #4cc9f0, #f72585);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .cta-description {
+            font-size: 1.3rem;
+            color: #b8c1ec;
+            margin-bottom: 50px;
+            line-height: 1.8;
+        }
+
+        .btn-cta {
+            background: linear-gradient(to right, #ff9800, #ff5722);
+            color: white;
+            border: none;
+            padding: 20px 50px;
+            border-radius: 15px;
+            font-size: 1.3rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(255, 152, 0, 0.3);
+            display: inline-flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .btn-cta:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 15px 40px rgba(255, 152, 0, 0.4);
+        }
+
+        .btn-cta::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: left 0.7s;
+        }
+
+        .btn-cta:hover::before {
+            left: 100%;
+        }
+
+        /* ===== FOOTER ===== */
+        footer {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 60px 0 30px;
+            border-top: 1px solid rgba(76, 201, 240, 0.1);
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-column h3 {
+            font-size: 1.3rem;
+            color: white;
+            margin-bottom: 25px;
+            background: linear-gradient(to right, #4cc9f0, #f72585);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 12px;
+        }
+
+        .footer-links a {
+            color: #b8c1ec;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: #4cc9f0;
+            padding-left: 5px;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: #b8c1ec;
+            font-size: 0.9rem;
+        }
+
+        /* ===== RESPONSIVE DESIGN ===== */
+        @media (max-width: 1200px) {
+            .hero h1 {
+                font-size: 3.5rem;
+            }
+            
+            .process-grid {
+                grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            }
+        }
+
+        @media (max-width: 992px) {
+            .hero h1 {
+                font-size: 3rem;
+            }
+            
+            .hero-subtitle {
+                font-size: 1.5rem;
+            }
+            
+            nav ul {
+                gap: 20px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero {
+                padding-top: 150px;
+            }
+            
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .hero-subtitle {
+                font-size: 1.2rem;
+            }
+            
+            .nav-container {
+                flex-direction: column;
+                gap: 20px;
+            }
+            
+            nav ul {
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 15px;
+            }
+            
+            .hero-stats {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .stat-item {
+                width: 100%;
+                max-width: 300px;
+                text-align: center;
+            }
+            
+            .process-grid,
+            .stats-grid,
+            .benefits-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .cta-title {
+                font-size: 2.2rem;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+            
+            .hero-subtitle {
+                font-size: 1rem;
+            }
+            
+            .btn-hero,
+            .btn-cta {
+                padding: 15px 30px;
+                font-size: 1.1rem;
+            }
+            
+            .section-title {
+                font-size: 2rem;
+            }
+            
+            .cta-title {
+                font-size: 1.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header avec Navigation -->
+    <header>
+        <div class="container nav-container">
+            <div class="logo">
+                <div class="logo-icon">
+                    <div class="gear gear-large"></div>
+                    <div class="gear gear-medium"></div>
+                    <div class="gear gear-small"></div>
+                </div>
+                <div class="logo-text">PIG</div>
+            </div>
+            
+            <nav>
+                <ul>
+                    <li><a href="#accueil">Accueil</a></li>
+                    <li><a href="#filières">Filières</a></li>
+                    <li><a href="secteur-industriel.html">Le secteur industriel en Guinée</a></li> <!-- NOUVEAU BOUTON -->
+                    <li><a href="#apropos">À propos</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </nav>
+            
+            <!-- BOUTON SUPPRIMÉ -->
+        </div>
+    </header>
+
+    <!-- Section Héro -->
+    <section class="hero" id="accueil">
+        <div class="container">
+            <div class="hero-content">
+                <h1>PLATEFORME INDUSTRIELLE GUINÉENNE</h1>
+                <p class="hero-subtitle">L'IA qui concrétise vos projets industriels</p>
+                <p class="hero-description">
+                    De l'idée à l'usine : la première plateforme intelligente qui transforme vos ambitions 
+                    en projets industriels rentables en Guinée. Guide complet, analyse IA et accompagnement expert.
+                </p>
+                
+                <div class="hero-stats">
+                    <!-- Ce bouton mène maintenant aux filières -->
+                    <a href="filieres.html" class="stat-item">
+                        <strong>12</strong> filières industrielles
+                    </a>
+                    <div class="stat-item">
+                        <strong>96</strong> unités de production
+                    </div>
+                    <div class="stat-item">
+                        <strong>15-25%</strong> ROI estimé
+                    </div>
+                    <div class="stat-item">
+                        <strong>3-5 ans</strong> retour investissement
+                    </div>
+                </div>
+                
+                <!-- Ce bouton mène maintenant aux filières -->
+                <button class="btn-hero" id="start-main-btn">
+                    <i class="fas fa-play-circle"></i> COMMENCER GRATUITEMENT VOTRE PROJET
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section Chiffres Clés -->
+    <section class="stats-section">
+        <div class="container">
+            <div class="stats-grid">
+                <!-- Cette carte mène maintenant aux filières -->
+                <a href="filieres.html" class="stat-card">
+                    <div class="stat-icon">🏭</div>
+                    <div class="stat-number">12</div>
+                    <div class="stat-label">Filières Industrielles</div>
+                </a>
+                
+                <div class="stat-card">
+                    <div class="stat-icon">⚙️</div>
+                    <div class="stat-number">96</div>
+                    <div class="stat-label">Unités de Production</div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-icon">📈</div>
+                    <div class="stat-number">15-25%</div>
+                    <div class="stat-label">ROI Estimé</div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-icon">⏳</div>
+                    <div class="stat-number">3-5 ans</div>
+                    <div class="stat-label">Retour sur Investissement</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section Processus (4 ÉTAPES) -->
+    <section class="process-section" id="filières">
+        <div class="container">
+            <h2 class="section-title">Votre Projet en 4 Étapes</h2>
+            
+            <div class="process-grid">
+                <!-- Étape 1 : Choisissez votre Filière -->
+                <a href="filieres.html" class="process-card">
+                    <div class="process-number">ÉTAPE 1</div>
+                    <div class="process-icon">🏭</div>
+                    <h3 class="process-title">Choisissez votre Filière</h3>
+                    <p class="process-description">
+                        Sélectionnez parmi 12 secteurs industriels porteurs en Guinée, identifiés pour leur fort potentiel de croissance et de rentabilité.
+                    </p>
+                    <div class="process-cta">
+                        Explorer les 12 filières <i class="fas fa-arrow-right"></i>
+                    </div>
+                </a>
+                
+                <!-- Étape 2 : Choisissez votre Unité de Production -->
+                <a href="#" class="process-card">
+                    <div class="process-number">ÉTAPE 2</div>
+                    <div class="process-icon">⚙️</div>
+                    <h3 class="process-title">Choisissez votre Unité de Production</h3>
+                    <p class="process-description">
+                        Parcourez et comparez les unités de production détaillées au sein de votre filière. Analysez les investissements, processus et débouchés.
+                    </p>
+                    <div class="process-cta">
+                        Pour en savoir plus <i class="fas fa-arrow-right"></i>
+                    </div>
+                </a>
+                
+                <!-- Étape 3 : Votre Business Plan -->
+                <a href="#" class="process-card">
+                    <div class="process-number">ÉTAPE 3</div>
+                    <div class="process-icon">📊</div>
+                    <h3 class="process-title">Votre Business Plan</h3>
+                    <p class="process-description">
+                        Obtenez une analyse financière et technique détaillée pour l'unité choisie. Évaluez la rentabilité et planifiez votre implantation.
+                    </p>
+                    <div class="process-cta">
+                        Découvrir les Business Plans <i class="fas fa-arrow-right"></i>
+                    </div>
+                </a>
+                
+                <!-- Étape 4 : Commandez votre Business Plan Complet -->
+                <a href="#" class="process-card">
+                    <div class="process-number">ÉTAPE 4</div>
+                    <div class="process-icon">🚀</div>
+                    <h3 class="process-title">Commandez votre Business Plan Complet</h3>
+                    <p class="process-description">
+                        Passez du projet à l'action avec un accompagnement sur mesure. Accédez à notre réseau d'experts et lancez votre entreprise.
+                    </p>
+                    <div class="process-cta">
+                        Passer à l'action <i class="fas fa-arrow-right"></i>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section Avantages -->
+    <section class="benefits-section" id="apropos">
+        <div class="container">
+            <h2 class="section-title">Pourquoi Choisir la PIG ?</h2>
+            
+            <div class="benefits-grid">
+                <div class="benefit-card">
+                    <div class="benefit-icon">🤖</div>
+                    <h3 class="benefit-title">IA Intelligente</h3>
+                    <p class="benefit-description">
+                        Notre intelligence artificielle analyse votre profil et vous guide vers les meilleures 
+                        opportunités industrielles adaptées à votre budget et compétences.
+                    </p>
+                </div>
+                
+                <div class="benefit-card">
+                    <div class="benefit-icon">🏛️</div>
+                    <h3 class="benefit-title">Alignement Gouvernemental</h3>
+                    <p class="benefit-description">
+                        Tous nos projets sont cohérents avec les politiques industrielles nationales et 
+                        bénéficient du soutien des institutions guinéennes.
+                    </p>
+                </div>
+                
+                <div class="benefit-card">
+                    <div class="benefit-icon">🤝</div>
+                    <h3 class="benefit-title">Réseau de Partenaires</h3>
+                    <p class="benefit-description">
+                        Accès exclusif à notre réseau de fournisseurs, experts techniques et institutions 
+                        financières pour garantir votre succès.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section Call to Action Finale -->
+    <section class="cta-section">
+        <div class="container">
+            <div class="cta-content">
+                <h2 class="cta-title">Votre Avenir Industriel Vous Attend</h2>
+                <p class="cta-description">
+                    Le premier pas vers la concrétisation de votre projet commence par l'exploration des opportunités. 
+                    Découvrez gratuitement la filière qui correspond à vos ambitions.
+                </p>
+                
+                <!-- Bouton avec nouveau texte menant aux filières -->
+                <button class="btn-cta" id="explore-opportunities-btn">
+                    <i class="fas fa-binoculars"></i> DÉCOUVRIR LES OPPORTUNITÉS
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="contact">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>Plateforme Industrielle Guinéenne</h3>
+                    <p style="color: #b8c1ec; line-height: 1.7;">
+                        La première plateforme intelligente dédiée au développement industriel en Guinée. 
+                        Nous accompagnons chaque étape de votre projet, de l'idée à la réalisation.
+                    </p>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Liens Rapides</h3>
+                    <ul class="footer-links">
+                        <li><a href="#accueil">Accueil</a></li>
+                        <li><a href="#filières">Filières Industrielles</a></li>
+                        <li><a href="secteur-industriel.html">Le secteur industriel</a></li>
+                        <li><a href="#apropos">À Propos</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Contact</h3>
+                    <ul class="footer-links">
+                        <li><a href="mailto:contact@pig-guinee.org">contact@pig-guinee.org</a></li>
+                        <li><a href="tel:+224000000000">+224 000 000 000</a></li>
+                        <li>Conakry, Guinée</li>
+                        <li>Lundi - Vendredi : 8h - 18h</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2025 Plateforme Industrielle Guinéenne. Tous droits réservés.</p>
+                <p style="margin-top: 10px; font-size: 0.8rem;">
+                    Développé avec l'appui de l'Intelligence Artificielle pour la transformation industrielle de la Guinée
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Initialisation
+        document.addEventListener('DOMContentLoaded', function() {
+            // Gestion des boutons qui redirigent vers la page des filières
+            const buttonsToFilieres = [
+                document.getElementById('start-main-btn'),
+                document.getElementById('explore-opportunities-btn')
+            ];
+            
+            // Redirection vers la page des filières (filieres.html)
+            buttonsToFilieres.forEach(button => {
+                if (button) {
+                    button.addEventListener('click', function() {
+                        window.location.href = 'filieres.html';
+                    });
+                }
+            });
+            
+            // Animation au scroll
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, observerOptions);
+            
+            // Observer les cartes pour animation
+            document.querySelectorAll('.stat-card, .process-card, .benefit-card').forEach(card => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(30px)';
+                card.style.transition = 'all 0.6s ease';
+                observer.observe(card);
+            });
+            
+            // Header scroll effect
+            window.addEventListener('scroll', function() {
+                const header = document.querySelector('header');
+                if (window.scrollY > 100) {
+                    header.style.background = 'rgba(13, 27, 42, 0.95)';
+                    header.style.padding = '10px 0';
+                } else {
+                    header.style.background = 'rgba(13, 27, 42, 0.9)';
+                    header.style.padding = '15px 0';
+                }
+            });
+            
+            // Smooth scroll pour les liens d'ancrage (sauf les liens vers d'autres pages)
+            document.querySelectorAll('nav a, .footer-links a').forEach(link => {
+                link.addEventListener('click', function(e) {
+                    const href = this.getAttribute('href');
+                    
+                    // Si c'est un lien d'ancrage (commence par #) et non un lien vers une autre page HTML
+                    if (href.startsWith('#') && !href.includes('.html')) {
+                        e.preventDefault();
+                        const targetId = href.substring(1);
+                        const targetElement = document.getElementById(targetId);
+                        
+                        if (targetElement) {
+                            window.scrollTo({
+                                top: targetElement.offsetTop - 100,
+                                behavior: 'smooth'
+                            });
+                        }
+                    }
+                    // Pour les liens .html, on laisse le navigateur faire sa redirection normale
+                });
+            });
+            
+            // Effet de frappe pour le titre héro (optionnel)
+            const heroTitle = document.querySelector('.hero h1');
+            const originalText = heroTitle.textContent;
+            heroTitle.textContent = '';
+            
+            let i = 0;
+            function typeWriter() {
+                if (i < originalText.length) {
+                    heroTitle.textContent += originalText.charAt(i);
+                    i++;
+                    setTimeout(typeWriter, 50);
+                }
+            }
+            
+            // Démarrer l'effet de frappe après un délai
+            setTimeout(typeWriter, 500);
+        // Démarrer l'effet de frappe après un délai
+            setTimeout(typeWriter, 500);
+        });
+    </script>
+
+<!-- ===== BOUTON DE CONFIRMATION ===== -->
+<div id="confirmation-container" style="text-align: center; margin: 50px 0 30px; padding: 20px; background: rgba(255, 255, 255, 0.05); border-radius: 15px;">
+    <h3 style="margin-bottom: 20px; color: #4cd964;">
+        <i class="fas fa-clipboard-check"></i> Finaliser votre choix
+    </h3>
+    
+    <button onclick="redirigerVersFichePalme()" 
+            id="btn-confirmer-selection"
+            style="background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+                   color: white;
+                   padding: 18px 50px;
+                   border: none;
+                   border-radius: 50px;
+                   font-size: 18px;
+                   font-weight: bold;
+                   cursor: pointer;
+                   box-shadow: 0 8px 25px rgba(40, 167, 69, 0.5);
+                   transition: all 0.3s ease;
+                   display: inline-flex;
+                   align-items: center;
+                   gap: 12px;">
+        <i class="fas fa-check-circle" style="font-size: 22px;"></i>
+        Confirmer la sélection
+    </button>
+    
+    <!-- AJOUTEZ CETTE LIGNE MANQUANTE : -->
+    <p style="margin-top: 15px; font-size: 14px; color: #aaa; font-style: italic;">
+        Vous serez redirigé vers la fiche détaillée de votre unité de production
+    </p>
+</div>
+<!-- FIN DU DIV confirmation-container -->
+
+<script>
+// Fonction de redirection vers la fiche huile de palme - VERSION TEST
+function redirigerVersFichePalme() {
+    console.log("🚀 Fonction redirigerVersFichePalme appelée !");
+    
+    // Test 1: Vérifier si la fonction est appelée
+    alert("✅ Bouton cliqué ! Redirection en cours...");
+    
+    // Test 2: Liste de tous les chemins possibles
+    const chemins = [
+        'production huile de palme raffinee.html',      // Option 1
+        './production huile de palme raffinee.html',    // Option 2 (recommandée)
+        'production%20huile%20de%20palme%20raffinee.html', // Option 3
+        './production%20huile%20de%20palme%20raffinee.html' // Option 4
+    ];
+    
+    console.log("📁 Chemins testés :", chemins);
+    
+    // Test 3: Essayer le chemin le plus probable
+    const cheminChoisi = chemins[1]; // Option 2 (./fichier.html)
+    console.log("🎯 Tentative avec :", cheminChoisi);
+    
+    // Redirection
+    window.location.href = cheminChoisi;
+}
+
+// DEBUG: Vérifier que le script charge
+console.log("✅ Script de confirmation chargé !");
+console.log("🔍 Bouton trouvé :", document.getElementById('btn-confirmer-selection'));
+
+// Version SIMPLIFIÉE des effets (sans bugs)
+document.addEventListener('DOMContentLoaded', function() {
+    const btn = document.getElementById('btn-confirmer-selection');
+    
+    if (btn) {
+        console.log("🎯 Bouton trouvé, ajout des effets...");
+        
+        // Effet survol SIMPLE
+        btn.onmouseenter = function() {
+            this.style.transform = 'scale(1.05)';
+        };
+        
+        btn.onmouseleave = function() {
+            this.style.transform = 'scale(1)';
+        };
+        
+        // TEST: Ajouter un écouteur alternatif
+        btn.addEventListener('click', function(e) {
+            console.log("🖱️ Clic détecté via addEventListener");
+        });
+    } else {
+        console.error("❌ Bouton NON trouvé ! Vérifiez l'ID 'btn-confirmer-selection'");
+    }
+});
+</script>
+
+<!-- AJOUTEZ CES BALISES DE FERMETURE SI ELLES MANQUENT : -->
+</div> <!-- Fermeture de div existant si besoin -->
+</main> <!-- Fermeture de main si besoin -->
+</body>
+</html>
